@@ -29,12 +29,22 @@ public class GameHandler : MonoBehaviour
         // Update values
         float amount = Time.deltaTime * decayRate;
         economyHealth = Mathf.Clamp(economyHealth - amount, 0.0f, 1.0f);
-        environmentHealth = Mathf.Clamp(environmentHealth - amount, 0.0f, 1.0f);
+        environmentHealth = Mathf.Clamp(environmentHealth + amount, 0.0f, 1.0f);
         housingDemand = Mathf.Clamp(housingDemand + amount, 0.0f, 1.0f);
 
         // Update slider
         economySlider.value = economyHealth;
         environmentSlider.value = environmentHealth;
         housingSlider.value = housingDemand;
+    }
+
+    public void economy_increase() 
+    {
+        economyHealth = economyHealth + 0.1f;
+    }
+
+    public void enviroment_decrease() 
+    {
+        environmentHealth = environmentHealth - 0.1f;
     }
 }
