@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 public class UIHandler : MonoBehaviour
 {
@@ -9,7 +12,10 @@ public class UIHandler : MonoBehaviour
     public GameObject PinUI;
     public GameObject TutorialOverlay;
     public GameObject TutorialPin;
-    public GameObject ActivatePinButton;
+    public Button ActivatePinButton;
+    public GameHandler GameHandler;
+    public float MinDistToPin;
+    TMP_Text ActiveButtonText;
 
     // Start is called before the first frame update
     void Start()
@@ -18,14 +24,31 @@ public class UIHandler : MonoBehaviour
         PinUI = GameObject.Find("PinUI");
         TutorialOverlay = GameObject.Find("TutorialOverlay");
         TutorialPin = GameObject.Find("TutorialPin");
-        ActivatePinButton = GameObject.Find("ActivatePinButton");
+
+        ActiveButtonText = ActivatePinButton.GetComponentInChildren<TextMeshPro>();
 
         PinUI.SetActive(false);
         TutorialOverlay.SetActive(false);
         TutorialPin.SetActive(false);
-        //ActivatePinButton.SetActive(false);
+        
+        //ActivatePinButton.GetComponentInChildren<TextMeshPro>().text = "";
+        
     }
+    private void Update()
+    {
 
+        //if (GameHandler.closestDist < MinDistToPin)
+        {
+            //ActivatePinButton.GetComponent<Button>().interactable = true;
+            //ActivatePinButton.GetComponentInChildren<TextMeshPro>().text = "Beans";
+        }
+        //else 
+        {
+            //ActivatePinButton.GetComponent<Button>().interactable = false;
+            //ActivatePinButton.GetComponentInChildren<TextMeshPro>().text = "";
+        }
+                
+    }
     public void Toggle_Tutor() 
     {
         Debug.Log("Toggle_Tutor Called");

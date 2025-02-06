@@ -2,6 +2,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
+[Serializable]
+public class Pin
+{
+    public string name;
+    public GPSLoc pos;
+}
+
 public class GameHandler : MonoBehaviour
 
 
@@ -13,27 +20,28 @@ public class GameHandler : MonoBehaviour
     public float decayRate = 0.01f;
     public float distanceThreshold = 0.01f;
 
-    public Pos[] pins;
+    public Pin[] pins;
     public int closestPin;
     public double closestDist;
-
-    Pos currentPos;
 
     Slider economySlider;
     Slider environmentSlider;
     Slider housingSlider;
+    LocationStuff locationHandler;
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // Start is called before the first frame update
     void Start()
     {
         economySlider = GameObject.Find("EconomySlider").GetComponent<Slider>();
         environmentSlider = GameObject.Find("EnvironmentSlider").GetComponent<Slider>();
         housingSlider = GameObject.Find("HousingSlider").GetComponent<Slider>();
+        locationHandler = GameObject.Find("LocationHandler").GetComponent<LocationStuff>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("ClosestDIST   " + closestDist);
         // Update values
         float amount = Time.deltaTime * decayRate;
         economyHealth = Mathf.Clamp(economyHealth - amount, 0.0f, 1.0f);
@@ -45,15 +53,12 @@ public class GameHandler : MonoBehaviour
         environmentSlider.value = environmentHealth;
         housingSlider.value = housingDemand;
 
-        // Update position
-        this.currentPos.lat = Input.location.lastData.latitude;
-        this.currentPos.lon = Input.location.lastData.longitude;
-
         // Find closest pin
         this.closestDist = Double.PositiveInfinity;
         for (int i = 0; i < pins.Length; i++)
         {
-            double d = this.currentPos.Distance(this.pins[i]);
+            GPSLoc p = this.locationHandler.currLoc;
+            double d = locationHandler.distance(p.lat, p.lon, this.pins[i].pos.lat, this.pins[i].pos.lon, this.locationHandler.unit);
             if (d < this.closestDist)
             {
                 this.closestDist = d;
@@ -73,26 +78,3 @@ public class GameHandler : MonoBehaviour
     }
 }
 
-[Serializable]
-public class Pos
-{
-    public string name;
-    public double lon;
-    public double lat;
-
-    public Pos(double lon, double lat)
-    {
-        this.lon = lon;
-        this.lat = lat;
-    }
-
-    public double Distance(Pos to)
-    {
-        double r = 6371;
-        double p = Math.PI / 180;
-        double a = 0.5 - Math.Cos((to.lat - this.lat) * p) / 2
-                      + Math.Cos(this.lat * p) * Math.Cos(to.lat * p) *
-                        (1 - Math.Cos((to.lon - this.lon) * p)) / 2;
-        return 2 * r * Math.Asin(Math.Sqrt(a));
-    }
-}

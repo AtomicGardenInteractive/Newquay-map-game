@@ -222,7 +222,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1331,9 +1331,14 @@ MonoBehaviour:
   decayRate: 0.01
   distanceThreshold: 0.01
   pins:
-  - name: 
-    lon: 0
-    lat: 0
+  - name: Home
+    pos:
+      lon: 50.3804
+      lat: -4.137715
+  - name: Church
+    pos:
+      lon: 50.380093
+      lat: -4.138665
   closestPin: 0
   closestDist: 0
 --- !u!4 &239118971
@@ -1971,7 +1976,9 @@ MonoBehaviour:
   PinUI: {fileID: 0}
   TutorialOverlay: {fileID: 0}
   TutorialPin: {fileID: 0}
-  ActivatePinButton: {fileID: 26090093}
+  ActivatePinButton: {fileID: 26090095}
+  GameHandler: {fileID: 239118970}
+  MinDistToPin: 0.001
 --- !u!4 &430810166
 Transform:
   m_ObjectHideFlags: 0
@@ -2122,6 +2129,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 448204569}
   m_CullTransparentMesh: 1
+--- !u!1 &496119230
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 496119232}
+  - component: {fileID: 496119231}
+  m_Layer: 0
+  m_Name: LocationHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &496119231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496119230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 997faf6e3307adc498e93bcdf35d5aa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unit: 75
+  debugTxt: {fileID: 76217114}
+  gps_ok: 0
+  currLoc:
+    lon: 0
+    lat: 0
+--- !u!4 &496119232
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496119230}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 121.36262, y: 551.2574, z: -7.8440843}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &521827831
 GameObject:
   m_ObjectHideFlags: 0
@@ -5356,55 +5413,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!1 &1424484414
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1424484416}
-  - component: {fileID: 1424484415}
-  m_Layer: 0
-  m_Name: GPSHandler
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1424484415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1424484414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33967f490b2a4364498e4d95c1b05207, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unit: 75
-  debugTxt: {fileID: 76217114}
-  gps_ok: 0
-  PI: 3.1415927
-  measureDistance: 0
---- !u!4 &1424484416
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1424484414}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 443.9348, y: 255.45338, z: 0.25114948}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1448660636
 GameObject:
   m_ObjectHideFlags: 0
@@ -6880,6 +6888,6 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 235593664}
   - {fileID: 1066904617}
-  - {fileID: 1424484416}
   - {fileID: 239118971}
   - {fileID: 430810166}
+  - {fileID: 496119232}
