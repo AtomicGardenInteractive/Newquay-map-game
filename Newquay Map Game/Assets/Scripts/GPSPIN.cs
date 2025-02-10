@@ -19,11 +19,12 @@ public class GPSPIN : MonoBehaviour
         public GPSLoc pos;
         public enum PinType { Beach, Commercial, Residential}
         public PinType pinType;
+
     //Component refrences
     private Image mainIcon;
     private Image thoughtIcon;
     private GameObject thoughtBubble;
-    private Button debugButton;
+    public Button debugButton;
 
     public GameObject iconGameObject;
     public GameObject thoughtIconGameObject;
@@ -33,6 +34,7 @@ public class GPSPIN : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //debugButton = GetComponentInChildren<Button>();
         //set images
         mainIcon = iconGameObject.GetComponent<Image>();
         thoughtIcon = thoughtIconGameObject.GetComponent<Image>();
@@ -59,5 +61,10 @@ public class GPSPIN : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void disable_button()
+    {
+        debugButton.interactable = false;
     }
 }

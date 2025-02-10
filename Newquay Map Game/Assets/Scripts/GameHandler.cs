@@ -10,8 +10,6 @@ public class Pin
 }
 
 public class GameHandler : MonoBehaviour
-
-
 {
     public float economyHealth = 0.4f;
     public float environmentHealth = 0.4f;
@@ -28,7 +26,10 @@ public class GameHandler : MonoBehaviour
     Slider environmentSlider;
     Slider housingSlider;
     LocationStuff locationHandler;
-    
+
+    public int numPinsVisited;
+    public GameObject gameOverScreen;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,16 +66,45 @@ public class GameHandler : MonoBehaviour
                 this.closestPin = i;
             }
         }
+
+        if (numPinsVisited == 8)
+        {
+            gameOverScreen.SetActive(true); 
+        }
     }
 
     public void economy_increase() 
     {
-        economyHealth = economyHealth + 0.1f;
+        economyHealth = economyHealth + 0.01f;
+    }
+
+    public void economy_decrease()
+    {
+        economyHealth = economyHealth - 0.01f;
     }
 
     public void enviroment_decrease() 
     {
-        environmentHealth = environmentHealth - 0.1f;
+        environmentHealth = environmentHealth - 0.01f;
     }
-}
+
+    public void enviroment_increase()
+    {
+        environmentHealth = environmentHealth + 0.01f;
+    }
+
+    public void housing_increase()
+    {
+        housingDemand = housingDemand + 0.01f;
+    }
+    public void housing_decrease()
+    {
+        housingDemand = housingDemand - 0.01f;
+    }
+
+    public void Pin_Visited()
+    {
+        numPinsVisited = numPinsVisited + 1;
+    }
+    }
 
