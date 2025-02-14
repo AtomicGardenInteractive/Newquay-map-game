@@ -13,6 +13,7 @@ public class EmojiImages
     public Sprite emojiImage;
 }
 
+[Serializable]
 public class GPSPIN : MonoBehaviour
 {
         public string pinName;

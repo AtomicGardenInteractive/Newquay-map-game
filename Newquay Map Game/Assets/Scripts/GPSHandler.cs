@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 
-public class LocationStuff : MonoBehaviour
+public class GPSHandler : MonoBehaviour
 {
 
     [SerializeField]
@@ -12,7 +12,6 @@ public class LocationStuff : MonoBehaviour
 
     public TMP_Text debugTxt;
     public bool gps_ok = false;
-    float PI = Mathf.PI;
 
     GPSLoc startLoc = new GPSLoc();
     public GPSLoc currLoc = new GPSLoc();
@@ -118,6 +117,10 @@ public class LocationStuff : MonoBehaviour
     //https://www.geodatasource.com/resources/tutorials/how-to-calculate-the-distance-between-2-locations-using-c/
     public double distance(double lat1, double lon1, double lat2, double lon2, char unit)
     {
+        // TODO: this should be swapped out for a real spherical distance function in future
+        
+        //return Math.Sqrt(Math.Pow(lat2 - lat1, 2) + Math.Pow(lon2 - lon1, 2));
+
         if ((lat1 == lat2) && (lon1 == lon2))
         {
             return 0;
@@ -162,8 +165,8 @@ public class LocationStuff : MonoBehaviour
 [Serializable]
 public class GPSLoc
 {
-    public float lon;
     public float lat;
+    public float lon;
 
     public GPSLoc()
     {

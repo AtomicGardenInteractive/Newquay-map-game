@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static GPSPIN;
 using static System.Net.Mime.MediaTypeNames;
 
 public class UIHandler : MonoBehaviour
@@ -21,6 +22,7 @@ public class UIHandler : MonoBehaviour
     public GameHandler gameHandler;
     public GameObject gameOverScreen;
     public float minDistToPin;
+    public float maxDistToPin;
     TMP_Text ActiveButtonText;
 
     private Sprite spaSprite;
@@ -30,6 +32,11 @@ public class UIHandler : MonoBehaviour
     private Sprite highRiseSprite;
     private Sprite parkingSprite;
     private Sprite busSprite;
+
+    public TMP_Text gameOverScore;
+
+    TMP_Text locationName;
+    int currentPin = -1;
 
     // Start is called before the first frame update
     void Start()
@@ -53,31 +60,28 @@ public class UIHandler : MonoBehaviour
         parkingSprite = Resources.Load<Sprite>("Parking");
         busSprite = Resources.Load<Sprite>("Bus");
 
-        //ActiveButtonText = activatePinButton.GetComponentInChildren<TextMeshPro>();
+        activatePinButton = GameObject.Find("Canvas/Home/ActivatePinButton").GetComponent<Button>();
+        locationName = activatePinButton.GetComponentInChildren<TMP_Text>();
 
         pinUI.SetActive(false);
         pinUI2.SetActive(false);
         pinUI3.SetActive(false);
         tutorialOverlay.SetActive(false);
         tutorialPin.SetActive(false);
-
-        //ActivatePinButton.GetComponentInChildren<TextMeshPro>().text = "";
-
     }
     private void Update()
     {
-
-        //if (GameHandler.closestDist < MinDistToPin)
+        if (this.currentPin >= 0 && gameHandler.closestDist > maxDistToPin)
         {
-            //ActivatePinButton.GetComponent<Button>().interactable = true;
-            //ActivatePinButton.GetComponentInChildren<TextMeshPro>().text = "Beans";
-        }
-        //else 
+            this.currentPin = 0;
+        } else if (gameHandler.closestDist < minDistToPin)
         {
-            //ActivatePinButton.GetComponent<Button>().interactable = false;
-            //ActivatePinButton.GetComponentInChildren<TextMeshPro>().text = "";
+            this.currentPin = gameHandler.closestPin;
         }
 
+        bool active = this.currentPin >= 0;
+        activatePinButton.interactable = active;
+        locationName.text = active ? gameHandler.pins[this.currentPin].pinName : "No pin active";
     }
     public void Toggle_Tutor()
     {
@@ -91,22 +95,38 @@ public class UIHandler : MonoBehaviour
     }
     public void Toggle_Pin()
     {
-        pinUI.SetActive(!pinUI.activeSelf);
-        GameOver();
+        GPSPIN pin = gameHandler.pins[this.currentPin];
+        switch (pin.pinType)
+        {
+            case PinType.Beach:
+                pinUI.SetActive(!pinUI.activeSelf);
+                gameHandler.Pin_Visited();
+                gameHandler.scorePinsVisited = (gameHandler.scorePinsVisited + 20);
+                break;
+            case PinType.Commercial:
+                pinUI2.SetActive(!pinUI2.activeSelf);
+                gameHandler.Pin_Visited();
+                gameHandler.scorePinsVisited = (gameHandler.scorePinsVisited + 10);
+                break;
+            case PinType.Residential:
+                pinUI3.SetActive(!pinUI3.activeSelf);
+                gameHandler.Pin_Visited();
+                gameHandler.scorePinsVisited = (gameHandler.scorePinsVisited + 20);
+                break;
+        }
     }
-    public void Toggle_Pin2()
-    {
-        pinUI2.SetActive(!pinUI2.activeSelf);
-        GameOver();
-    }
-    public void Toggle_Pin3()
-    {
-        pinUI3.SetActive(!pinUI3.activeSelf);
-        GameOver();
-    }
-    public void Change_Image()
-    {
 
+    public void Close_Pin()
+    {
+        pinUI.SetActive(false);
+        pinUI2.SetActive(false);
+        pinUI3.SetActive(false);
+        GameOver();
+    }
+
+    public void Change_Image(GPSPIN.PinType pinType)
+    {
+        
     }
 
     public void GameOver()
@@ -114,6 +134,7 @@ public class UIHandler : MonoBehaviour
         if (gameHandler.numPinsVisited == 8)
         {
             gameOverScreen.SetActive(true);
+            gameOverScore.text = "Score: " + (gameHandler.numPinsVisited + gameHandler.scorePinsVisited * (gameHandler.economyHealth+gameHandler.environmentHealth - gameHandler.housingDemand) * 10).ToString();
         }
     }
 

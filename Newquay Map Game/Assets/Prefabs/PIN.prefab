@@ -213,8 +213,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pinName: 
   pos:
-    lon: 0
     lat: 0
+    lon: 0
   pinType: 2
   debugButton: {fileID: 9220116535437709213}
   iconGameObject: {fileID: 2882636009257576666}
@@ -366,7 +366,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3956538349995277140
 RectTransform:
   m_ObjectHideFlags: 0
