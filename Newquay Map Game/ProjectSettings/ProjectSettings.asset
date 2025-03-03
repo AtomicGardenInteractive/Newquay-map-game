@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: Newquay Map Game
+  productName: PlaceTime
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -143,6 +143,9 @@ PlayerSettings:
   bundleVersion: 1.0.2
   preloadedAssets:
   - {fileID: -944628639613478452, guid: 030419afb5d9a7942bd1525924a02596, type: 3}
+  - {fileID: -1234299631786513021, guid: 71405e454eb3b0a4cb83f75849798466, type: 2}
+  - {fileID: 11400000, guid: 24e94c0c444265948894a3c04f89d5fd, type: 2}
+  - {fileID: 11400000, guid: d48428c3a7edaad42b0432bc5c426e68, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1

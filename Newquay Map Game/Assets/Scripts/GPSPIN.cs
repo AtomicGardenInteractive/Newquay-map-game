@@ -16,21 +16,21 @@ public class EmojiImages
 [Serializable]
 public class GPSPIN : MonoBehaviour
 {
-        public string pinName;
-        public GPSLoc pos;
-        public enum PinType { Beach, Commercial, Residential}
-        public PinType pinType;
+    public string pinName;
+    public GPSLoc pos;
+    public enum PinType { Beach, Commercial, Residential }
+    public PinType pinType;
+    public GameObject youAreHere;
 
     //Component refrences
     private Image mainIcon;
-    private Image thoughtIcon;
-    private GameObject thoughtBubble;
     public Button debugButton;
 
     public GameObject iconGameObject;
-    public GameObject thoughtIconGameObject;
 
-    public EmojiImages[] emojiImages; 
+    public EmojiImages[] emojiImages;
+
+    public bool visited;
 
     // Start is called before the first frame update
     void Start()
@@ -38,30 +38,28 @@ public class GPSPIN : MonoBehaviour
         //debugButton = GetComponentInChildren<Button>();
         //set images
         mainIcon = iconGameObject.GetComponent<Image>();
-        thoughtIcon = thoughtIconGameObject.GetComponent<Image>();
 
-        switch (pinType) 
-        { 
-         case PinType.Beach:
+        switch (pinType)
+        {
+            case PinType.Beach:
                 mainIcon.sprite = emojiImages[0].emojiImage;
                 break;
-         case PinType.Commercial:
+            case PinType.Commercial:
                 mainIcon.sprite = emojiImages[1].emojiImage;
-                break;  
-         case PinType.Residential:
+                break;
+            case PinType.Residential:
                 mainIcon.sprite = emojiImages[2].emojiImage;
-                break;  
-        }   
+                break;
+        }
 
         //set interactivity
 
 
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Change_Icon(int num)
     {
-        
+        mainIcon.sprite = emojiImages[num].emojiImage;
     }
 
     public void disable_button()
